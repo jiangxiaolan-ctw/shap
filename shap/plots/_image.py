@@ -20,7 +20,7 @@ from ..utils._legacy import kmeans
 # pylint: disable=unsubscriptable-object
 
 
-def image(shap_values, pixel_values=None, labels=None, width=20, aspect=0.2, hspace=0.2, labelpad=None, show=True, ori_width=300, ori_height=300):
+def image(shap_values, pixel_values=None, labels=None, width=20, aspect=0.2, hspace=0.2, labelpad=None, show=False, ori_width=300, ori_height=300, res_image_name='res.png'):
     """ Plots SHAP values for image inputs.
 
     Parameters
@@ -47,6 +47,8 @@ def image(shap_values, pixel_values=None, labels=None, width=20, aspect=0.2, hsp
         Whether matplotlib.pyplot.show() is called before returning. Setting this to False allows the plot
         to be customized further after it has been created.
     """
+
+    # import pdb; pdb.set_trace()
 
     # support passing an explanation object
     if str(type(shap_values)).endswith("Explanation'>"):
@@ -88,6 +90,7 @@ def image(shap_values, pixel_values=None, labels=None, width=20, aspect=0.2, hsp
 
     # plot our explanations
     x = pixel_values
+    # fig_size = np.array([12 * (len(shap_values) + 1), 10 * (x.shape[0] + 1)])
     fig_size = np.array([3 * (len(shap_values) + 1), 2.5 * (x.shape[0] + 1)])
     if fig_size[0] > width:
         fig_size *= width / fig_size[0]
@@ -147,7 +150,7 @@ def image(shap_values, pixel_values=None, labels=None, width=20, aspect=0.2, hsp
     if show:
         pl.show()
     else:
-        pl.savefig('example.png', dpi=fig.dpi)
+        pl.savefig(res_image_name, dpi=fig.dpi)
 
 
 def image_to_text(shap_values):
